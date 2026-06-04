@@ -136,7 +136,12 @@ Return this exact JSON structure:
 }`;
 
     try {
-      const response = await fetch("/api/analyze", {
+      const API_URL =
+        window.location.hostname === "localhost"
+          ? "http://localhost:3001/api/analyze"
+          : "/api/analyze";
+
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
