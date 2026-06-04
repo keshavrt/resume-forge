@@ -19,7 +19,9 @@ const EMPTY_RESUME = {
   projects: [{ name: "", tech: "", duration: "", description: "" }],
   achievements: "",
   positions: [{ role: "", org: "", duration: "", description: "" }],
-  references: [{ name: "", designation: "", institution: "", email: "", phone: "" }],
+  references: [
+    { name: "", designation: "", institution: "", email: "", phone: "" },
+  ],
 };
 
 const STORAGE_KEY = "resumeforge_data";
@@ -52,7 +54,9 @@ export default function App() {
 
   // JSON Export
   const handleExport = () => {
-    const blob = new Blob([JSON.stringify(resumeData, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(resumeData, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -93,21 +97,34 @@ export default function App() {
         <div className="flex items-center gap-3">
           <span className="text-2xl">📄</span>
           <div>
-            <h1 className="text-xl font-bold tracking-tight leading-none">ResumeForge</h1>
-            <p className="text-slate-400 text-xs mt-0.5">IIT-style resume builder</p>
+            <h1 className="text-xl font-bold tracking-tight leading-none">
+              ResumeForge
+            </h1>
           </div>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap justify-end">
           {/* Auto-save indicator */}
-          <span className={`text-xs transition-opacity duration-500 ${saveIndicator ? "opacity-100 text-emerald-400" : "opacity-0"}`}>
+          <span
+            className={`text-xs transition-opacity duration-500 ${saveIndicator ? "opacity-100 text-emerald-400" : "opacity-0"}`}
+          >
             ✓ Saved
           </span>
 
           {/* Mobile tab switcher */}
           <div className="flex md:hidden rounded-lg overflow-hidden border border-slate-600">
-            <button onClick={() => setActiveTab("form")} className={`px-3 py-1.5 text-sm font-medium transition ${activeTab === "form" ? "bg-blue-600 text-white" : "bg-slate-700 text-slate-300"}`}>Edit</button>
-            <button onClick={() => setActiveTab("preview")} className={`px-3 py-1.5 text-sm font-medium transition ${activeTab === "preview" ? "bg-blue-600 text-white" : "bg-slate-700 text-slate-300"}`}>Preview</button>
+            <button
+              onClick={() => setActiveTab("form")}
+              className={`px-3 py-1.5 text-sm font-medium transition ${activeTab === "form" ? "bg-blue-600 text-white" : "bg-slate-700 text-slate-300"}`}
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => setActiveTab("preview")}
+              className={`px-3 py-1.5 text-sm font-medium transition ${activeTab === "preview" ? "bg-blue-600 text-white" : "bg-slate-700 text-slate-300"}`}
+            >
+              Preview
+            </button>
           </div>
 
           {/* ATS Score button */}
@@ -119,7 +136,13 @@ export default function App() {
           </button>
 
           {/* Import */}
-          <input ref={importRef} type="file" accept=".json" onChange={handleImport} className="hidden" />
+          <input
+            ref={importRef}
+            type="file"
+            accept=".json"
+            onChange={handleImport}
+            className="hidden"
+          />
           <button
             onClick={() => importRef.current.click()}
             className="px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 transition"
@@ -150,7 +173,9 @@ export default function App() {
           <button
             onClick={() => setVerified(!verified)}
             className={`px-4 py-1.5 rounded-full text-sm font-semibold transition border-2 ${
-              verified ? "bg-emerald-500 border-emerald-400 text-white" : "bg-slate-700 border-slate-600 text-slate-200 hover:bg-slate-600"
+              verified
+                ? "bg-emerald-500 border-emerald-400 text-white"
+                : "bg-slate-700 border-slate-600 text-slate-200 hover:bg-slate-600"
             }`}
           >
             {verified ? "✔ Verified" : "○ Mark as Verified"}
@@ -161,14 +186,18 @@ export default function App() {
       {/* Split panel */}
       <div className="flex h-[calc(100vh-56px)]">
         {/* Form panel */}
-        <div className={`${activeTab === "preview" ? "hidden" : "flex"} md:flex w-full md:w-1/2 overflow-y-auto flex-col bg-white border-r border-slate-200`}>
+        <div
+          className={`${activeTab === "preview" ? "hidden" : "flex"} md:flex w-full md:w-1/2 overflow-y-auto flex-col bg-white border-r border-slate-200`}
+        >
           <div className="p-5">
             <Form resumeData={resumeData} setResumeData={setResumeData} />
           </div>
         </div>
 
         {/* Preview panel */}
-        <div className={`${activeTab === "form" ? "hidden" : "flex"} md:flex w-full md:w-1/2 overflow-y-auto flex-col bg-slate-50 p-5`}>
+        <div
+          className={`${activeTab === "form" ? "hidden" : "flex"} md:flex w-full md:w-1/2 overflow-y-auto flex-col bg-slate-50 p-5`}
+        >
           <Preview resumeData={resumeData} verified={verified} />
         </div>
       </div>
